@@ -1,13 +1,36 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout'
+import QuotesCard from '../components/Quotes/QuotesCard';
+import { Quotes } from '../interfaces'
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">About</Link>
-    </p>
-  </Layout>
-)
+interface IndexPageProps {
+  data: Quotes
+}
 
-export default IndexPage
+export default function IndexPage({ data }: IndexPageProps) {
+  const router = useRouter();
+  // Call this function whenever you want to
+  // refresh props!
+  const refreshData = () => {
+    router.replace(router.asPath);
+  }
+  return (
+    <Layout title="Random Quotes App">
+      <QuotesCard refreshData={refreshData} quotes={data}/>
+    </Layout>
+  )
+}
+
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://api.quotable.io/random`)
+  const data = await res.json()
+  // Pass data to the page via props
+
+
+  return { props: { data } }
+}
+

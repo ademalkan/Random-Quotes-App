@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p::before {
+    content: open-quote;
+    font-size: 2.5em;
+    line-height: 0.1em;
+    margin-right: 0.1em;
+    vertical-align: -0.4em;
+  }
+  
+  p::after {
+    content: close-quote;
+    font-size: 2.5em;
+    line-height: 0.1em;
+    margin-left: 0.1em;
+    vertical-align: -0.4em;
+  }
